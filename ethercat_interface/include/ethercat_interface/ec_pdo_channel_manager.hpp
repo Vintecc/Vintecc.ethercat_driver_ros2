@@ -21,6 +21,7 @@
 #include <string>
 #include <vector>
 #include <limits>
+#include <math.h>
 
 #include "yaml-cpp/yaml.h"
 
@@ -114,12 +115,12 @@ public:
       }
     } else if (pdo_type == RPDO && allow_ec_write) {
       if (interface_index >= 0 &&
-        !std::isnan(command_interface_ptr_->at(interface_index)) &&
+        !isnan(command_interface_ptr_->at(interface_index)) &&
         !override_command)
       {
         ec_write(domain_address, factor * command_interface_ptr_->at(interface_index) + offset);
       } else {
-        if (!std::isnan(default_value)) {
+        if (!isnan(default_value)) {
           ec_write(domain_address, default_value);
         }
       }
