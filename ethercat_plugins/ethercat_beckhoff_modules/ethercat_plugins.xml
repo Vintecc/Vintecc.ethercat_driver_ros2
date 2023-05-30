@@ -23,6 +23,9 @@
   <class name="ethercat_plugins/Beckhoff_EL3104" type="ethercat_plugins::Beckhoff_EL3104" base_class_type="ethercat_interface::EcSlave">
     <description>EtherCAT Terminal, 4-channel analog input, voltage, ±10 V, 16 bit, differential.</description>
   </class>
+  <class name="ethercat_plugins/Beckhoff_EL4004" type="ethercat_plugins::Beckhoff_EL4004" base_class_type="ethercat_interface::EcSlave">
+    <description>EtherCAT Terminal, 4-channel analog output, voltage, 0-10 V, 12 bit.</description>
+  </class>
   <class name="ethercat_plugins/Beckhoff_EL4132" type="ethercat_plugins::Beckhoff_EL4132" base_class_type="ethercat_interface::EcSlave">
     <description>EtherCAT Terminal, 2-channel analog output, voltage, ±10 V, 16 bit.</description>
   </class>
