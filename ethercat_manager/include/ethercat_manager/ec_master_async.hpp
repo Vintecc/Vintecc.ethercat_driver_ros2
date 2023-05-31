@@ -17,6 +17,8 @@
 #ifndef ETHERCAT_MANAGER__EC_MASTER_ASYNC_HPP_
 #define ETHERCAT_MANAGER__EC_MASTER_ASYNC_HPP_
 
+#include <unistd.h>
+
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
