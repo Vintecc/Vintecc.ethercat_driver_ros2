@@ -99,7 +99,7 @@ public:
   Beckhoff_EL3104()
   : EcSlave(0x00000002, 0x0c203052) {}
   virtual ~Beckhoff_EL3104() {}
-  virtual void processData(size_t index, uint8_t domain_address)
+  virtual void processData(size_t index, uint8_t * domain_address)
   {
     if (sii_ai_[index] >= 0) {
       double data = static_cast<double>(
@@ -205,6 +205,125 @@ private:
     {0, {10, 21, 32, 43}}
   };
 };
+// --------------------------------------------------------------------------------------
+class Beckhoff_EL3164 : public ethercat_interface::EcSlave
+{
+public:
+  Beckhoff_EL3164()
+  : EcSlave(0x00000002, 0x0c5c3052) {}
+  virtual ~Beckhoff_EL3164() {}
+  virtual void processData(size_t index, uint8_t * domain_address)
+  {
+    if (sii_ai_[index] >= 0) {
+      double data = static_cast<double>(
+        EC_READ_S16(domain_address)) / std::numeric_limits<int16_t>::max() * 10;
+      state_interface_ptr_->at(sii_ai_[index]) = data;
+    }
+  }
+  virtual const ec_sync_info_t * syncs() {return &syncs_[0];}
+  virtual size_t syncSize()
+  {
+    return sizeof(syncs_) / sizeof(ec_sync_info_t);
+  }
+  virtual const ec_pdo_entry_info_t * channels()
+  {
+    return channels_;
+  }
+  virtual void domains(DomainMap & domains) const
+  {
+    domains = domains_;
+  }
+  virtual bool setupSlave(
+    std::unordered_map<std::string, std::string> slave_paramters,
+    std::vector<double> * state_interface,
+    std::vector<double> * command_interface)
+  {
+    state_interface_ptr_ = state_interface;
+    command_interface_ptr_ = command_interface;
+    paramters_ = slave_paramters;
+
+    for (auto index = 0ul; index < 4; index++) {
+      if (paramters_.find("ai." + std::to_string(index + 1)) != paramters_.end()) {
+        if (paramters_.find(
+            "state_interface/" + paramters_["ai." + std::to_string(index + 1)]) != paramters_.end())
+        {
+          // std::cout << "setup index " << index << std::endl;
+          sii_ai_[index] = std::stoi(
+            paramters_["state_interface/" + paramters_["ai." + std::to_string(index + 1)]]);
+        }
+      }
+    }
+    return true;
+  }
+
+private:
+  int sii_ai_[4] = {-1, -1, -1, -1};
+
+  int write_data_[4] = {0, 0, 0, 0};
+
+  ec_pdo_entry_info_t channels_[44] = {
+    {0x6000, 0x01, 1},  /* Underrange */
+    {0x6000, 0x02, 1},  /* Overrange */
+    {0x6000, 0x03, 2},  /* Limit 1 */
+    {0x6000, 0x05, 2},  /* Limit 2 */
+    {0x6000, 0x07, 1},  /* Error */
+    {0x0000, 0x00, 1},  /* Gap */
+    {0x0000, 0x00, 5},  /* Gap */
+    {0x6000, 0x0e, 1},  /* Sync error */
+    {0x6000, 0x0f, 1},  /* TxPDO State */
+    {0x6000, 0x10, 1},  /* TxPDO Toggle */
+    {0x6000, 0x11, 16},  /* Value */
+    {0x6010, 0x01, 1},  /* Underrange */
+    {0x6010, 0x02, 1},  /* Overrange */
+    {0x6010, 0x03, 2},  /* Limit 1 */
+    {0x6010, 0x05, 2},  /* Limit 2 */
+    {0x6010, 0x07, 1},  /* Error */
+    {0x0000, 0x00, 1},  /* Gap */
+    {0x0000, 0x00, 5},  /* Gap */
+    {0x6010, 0x0e, 1},  /* Sync error */
+    {0x6010, 0x0f, 1},  /* TxPDO State */
+    {0x6010, 0x10, 1},  /* TxPDO Toggle */
+    {0x6010, 0x11, 16},  /* Value */
+    {0x6020, 0x01, 1},  /* Underrange */
+    {0x6020, 0x02, 1},  /* Overrange */
+    {0x6020, 0x03, 2},  /* Limit 1 */
+    {0x6020, 0x05, 2},  /* Limit 2 */
+    {0x6020, 0x07, 1},  /* Error */
+    {0x0000, 0x00, 1},  /* Gap */
+    {0x0000, 0x00, 5},  /* Gap */
+    {0x6020, 0x0e, 1},  /* Sync error */
+    {0x6020, 0x0f, 1},  /* TxPDO State */
+    {0x6020, 0x10, 1},  /* TxPDO Toggle */
+    {0x6020, 0x11, 16},  /* Value */
+    {0x6030, 0x01, 1},  /* Underrange */
+    {0x6030, 0x02, 1},  /* Overrange */
+    {0x6030, 0x03, 2}, /* Limit 1 */
+    {0x6030, 0x05, 2},  /* Limit 2 */
+    {0x6030, 0x07, 1},  /* Error */
+    {0x0000, 0x00, 1},  /* Gap */
+    {0x0000, 0x00, 5},  /* Gap */
+    {0x6030, 0x0e, 1},  /* Sync error */
+    {0x6030, 0x0f, 1},  /* TxPDO State */
+    {0x6030, 0x10, 1},  /* TxPDO Toggle */
+    {0x6030, 0x11, 16},  /* Value */
+  };
+  ec_pdo_info_t pdos_[4] = {
+    {0x1a00, 11, channels_ + 0},  /* AI TxPDO-Map Standard Ch.1 */
+    {0x1a02, 11, channels_ + 11},  /* AI TxPDO-Map Standard Ch.2 */
+    {0x1a04, 11, channels_ + 22},  /* AI TxPDO-Map Standard Ch.3 */
+    {0x1a06, 11, channels_ + 33},  /* AI TxPDO-Map Standard Ch.4 */
+  };
+  ec_sync_info_t syncs_[5] = {
+    {0, EC_DIR_OUTPUT, 0, NULL, EC_WD_DISABLE},
+    {1, EC_DIR_INPUT, 0, NULL, EC_WD_DISABLE},
+    {2, EC_DIR_OUTPUT, 0, NULL, EC_WD_DISABLE},
+    {3, EC_DIR_INPUT, 4, pdos_ + 0, EC_WD_ENABLE},
+    {0xff}
+  };
+  DomainMap domains_ = {
+    {0, {10, 21, 32, 43}}
+  };
+};
 
 }  // namespace ethercat_plugins
 
@@ -212,3 +331,4 @@ private:
 
 PLUGINLIB_EXPORT_CLASS(ethercat_plugins::Beckhoff_EL3102, ethercat_interface::EcSlave)
 PLUGINLIB_EXPORT_CLASS(ethercat_plugins::Beckhoff_EL3104, ethercat_interface::EcSlave)
+PLUGINLIB_EXPORT_CLASS(ethercat_plugins::Beckhoff_EL3164, ethercat_interface::EcSlave)

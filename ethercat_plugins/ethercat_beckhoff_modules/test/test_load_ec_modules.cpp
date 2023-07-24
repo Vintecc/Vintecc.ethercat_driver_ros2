@@ -60,6 +60,13 @@ TEST(TestLoadBeckhoff_EL2124, load_ec_module)
   ASSERT_NO_THROW(ec_loader_.createSharedInstance("ethercat_plugins/Beckhoff_EL2124"));
 }
 
+TEST(TestLoadBeckhoff_EL3004, load_ec_module)
+{
+  pluginlib::ClassLoader<ethercat_interface::EcSlave> ec_loader_{
+    "ethercat_interface", "ethercat_interface::EcSlave"};
+  ASSERT_NO_THROW(ec_loader_.createSharedInstance("ethercat_plugins/Beckhoff_EL3004"));
+}
+
 TEST(TestLoadBeckhoff_EL3102, load_ec_module)
 {
   pluginlib::ClassLoader<ethercat_interface::EcSlave> ec_loader_{
@@ -72,6 +79,13 @@ TEST(TestLoadBeckhoff_EL3104, load_ec_module)
   pluginlib::ClassLoader<ethercat_interface::EcSlave> ec_loader_{
     "ethercat_interface", "ethercat_interface::EcSlave"};
   ASSERT_NO_THROW(ec_loader_.createSharedInstance("ethercat_plugins/Beckhoff_EL3104"));
+}
+
+TEST(TestLoadBeckhoff_EL3164, load_ec_module)
+{
+  pluginlib::ClassLoader<ethercat_interface::EcSlave> ec_loader_{
+    "ethercat_interface", "ethercat_interface::EcSlave"};
+  ASSERT_NO_THROW(ec_loader_.createSharedInstance("ethercat_plugins/Beckhoff_EL3164"));
 }
 
 TEST(TestLoadBeckhoff_EL4132, load_ec_module)
