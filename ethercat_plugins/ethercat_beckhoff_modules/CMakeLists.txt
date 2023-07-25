@@ -24,10 +24,10 @@ ament_target_dependencies(
   "pluginlib"
 )
 pluginlib_export_plugin_description_file(ethercat_interface ethercat_plugins.xml)
-install(
-  DIRECTORY include/
-  DESTINATION include
-)
+# install(
+#   DIRECTORY include/
+#   DESTINATION include
+# )
 install(
   TARGETS ${PROJECT_NAME}
   EXPORT export_${PROJECT_NAME}
