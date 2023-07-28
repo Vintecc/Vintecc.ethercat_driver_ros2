@@ -60,6 +60,13 @@ TEST(TestLoadBeckhoff_EL2124, load_ec_module)
   ASSERT_NO_THROW(ec_loader_.createSharedInstance("ethercat_plugins/Beckhoff_EL2124"));
 }
 
+TEST(TestLoadBeckhoff_EL2624, load_ec_module)
+{
+  pluginlib::ClassLoader<ethercat_interface::EcSlave> ec_loader_{
+    "ethercat_interface", "ethercat_interface::EcSlave"};
+  ASSERT_NO_THROW(ec_loader_.createSharedInstance("ethercat_plugins/Beckhoff_EL2624"));
+}
+
 TEST(TestLoadBeckhoff_EL3004, load_ec_module)
 {
   pluginlib::ClassLoader<ethercat_interface::EcSlave> ec_loader_{
