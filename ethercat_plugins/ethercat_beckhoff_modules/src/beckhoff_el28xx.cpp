@@ -21,7 +21,7 @@ class Beckhoff_EL2828 : public ethercat_interface::EcSlave
 {
 public:
   Beckhoff_EL2828()
-  : EcSlave(0x00000002, 0x07d83052) {}
+  : EcSlave(0x00000002, 0x0b0c3052) {}
   virtual ~Beckhoff_EL2828() {}
   virtual void processData(size_t index, uint8_t * domain_address)
   {
