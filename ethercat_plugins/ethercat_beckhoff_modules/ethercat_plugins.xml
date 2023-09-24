@@ -20,6 +20,9 @@
   <class name="ethercat_plugins/Beckhoff_EL2624" type="ethercat_plugins::Beckhoff_EL2624" base_class_type="ethercat_interface::EcSlave">
     <description>EtherCAT Terminal, 4-channel relay output, 125 V AC, 30 V DC, 0.5 A AC, 2 A DC.</description>
   </class>
+  <class name="ethercat_plugins/Beckhoff_EL2828" type="ethercat_plugins::Beckhoff_EL2828" base_class_type="ethercat_interface::EcSlave">
+    <description>EtherCAT Terminal, 8-channel digital output, 24 V DC, 2 A.</description>
+  </class>
   <class name="ethercat_plugins/Beckhoff_EL3004" type="ethercat_plugins::Beckhoff_EL3004" base_class_type="ethercat_interface::EcSlave">
     <description>EtherCAT Terminal, 4-channel analog input, voltage, ±10 V, 12 bit, differential.</description>
   </class>
