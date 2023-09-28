@@ -47,4 +47,7 @@
   <class name="ethercat_plugins/Beckhoff_EL5101" type="ethercat_plugins::Beckhoff_EL5101" base_class_type="ethercat_interface::EcSlave">
     <description>EtherCAT Terminal, 1-channel encoder interface, incremental, 5 V DC (DIFF RS422, TTL), 1 MHz.</description>
   </class>
+  <class name="ethercat_plugins/Beckhoff_EL5151" type="ethercat_plugins::Beckhoff_EL5151" base_class_type="ethercat_interface::EcSlave">
+    <description>EtherCAT Terminal, 1-channel encoder interface, incremental, 24 V DC HTL, 100 kHz.</description>
+  </class>
 </library>
