@@ -284,7 +284,7 @@ class Beckhoff_EL5151 : public ethercat_interface::EcSlave
 {
 public:
   Beckhoff_EL5151()
-  : EcSlave(0x00000002, 0x13ed3052) {}
+  : EcSlave(0x00000002, 0x141f3052) {}
   virtual ~Beckhoff_EL5151() {}
   virtual void processData(size_t index, uint8_t * domain_address)
   {
@@ -406,7 +406,7 @@ private:
   int sii_position_ = -1;
 
 
-  ec_pdo_entry_info_t channels_[25] = {
+  ec_pdo_entry_info_t channels_[22] = {
     {0x7000, 0x01, 1},
     {0x7000, 0x02, 1},
     {0x7000, 0x03, 1},
@@ -427,9 +427,9 @@ private:
     {0x6000, 0x0e, 1},
     {0x0000, 0x00, 1}, // Gap
     {0x6000, 0x10, 1},
-    {0x1c32, 0x20, 1},
-    {0x1804, 0x07, 1},
-    {0x1804, 0x09, 1},
+    // {0x1c32, 0x20, 1},
+    // {0x1800, 0x07, 1},
+    // {0x1800, 0x09, 1},
     {0x6000, 0x11, 32},
     {0x6000, 0x12, 32},
   };
@@ -446,7 +446,7 @@ private:
   };
 
   DomainMap domains_ = {
-    {0, {0, 6, 7, 23, 24}}
+    {0, {0, 6, 7, 20, 21}}
   };
 
   enum DeviceState
